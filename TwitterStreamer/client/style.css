@@ -11,6 +11,11 @@ path {
 
 h1 {
   font-family: -apple-system-headline, Helvetica, Arial, sans-serif;
-  color: #bbb
+  color: #bbb; 
+  text-align: center;
+}
 
+body {
+  vertical-align: center;
+  text-align: center;
 }

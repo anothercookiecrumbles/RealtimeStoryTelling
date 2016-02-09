@@ -4,7 +4,7 @@ var projection;
 
 function drawMap() {
   var width = 970,
-  height = 820;
+  height = 800;
 
   var svg = d3.select("body").append("svg")
     .attr("width", width)
