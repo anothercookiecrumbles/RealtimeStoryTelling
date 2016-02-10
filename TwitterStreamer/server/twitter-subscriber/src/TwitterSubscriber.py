@@ -6,7 +6,7 @@ from tweepy import Stream
 
 class TwitterSubscriber:
 
-  def __init__(self, twitterListener, config):
+  def __init__(self, twitterListener, config, hashtags):
     """Initialises Tweepy, the API we're using to Twitter-verse.
       :param: twitterListener: Handles all callbacks from Twitter, including on_connected, on_message,
         on_exception, etc.
@@ -17,8 +17,10 @@ class TwitterSubscriber:
     self.auth.set_access_token(config["access_token"], config["access_token_secret"])
     self.api = tweepy.API(self.auth)
     self.twitterListener = twitterListener
+    self.hashtags = hashtags
 
   def subscribeTweets(self):
     """Starts subscribing to tweets which have one (or both) of the two hashtags: #Twitter and #RIPTwitter."""
     stream = Stream(self.auth, self.twitterListener)
-    stream.filter(track=['#Apple'], languages=['en'])
+    stream.filter(track=[','.join(self.hashtags)],
+                  languages=['en'])

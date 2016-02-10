@@ -15,8 +15,9 @@ of the dreaded AttributeErrors.
 
 class TwitterListener:
 
-  def __init__(self, webSocketSender):
+  def __init__(self, webSocketSender, hashtags):
     self.webSocketSender = webSocketSender
+    self.hashtags = hashtags
 
   def on_data(self, data):
     """
@@ -27,20 +28,43 @@ class TwitterListener:
       :param data: The entire Twitter message in the JSON format. From here, we can extract whichever values we
         want to send to the front-end.
     """
-    coordinates = None
+    dataToSend = {}
     try:
       dataInJson = json.loads(data)
       if dataInJson["place"] is not None:
         coordinates = dataInJson["place"]["bounding_box"]["coordinates"][0][0]
-        print(dataInJson["text"])
+
+        numberOfHashtags = len(dataInJson["entities"]["hashtags"])
+        """Support for multiple hashtags in the same tweet. If there are multiple hashtags in a tweet, we'll iterate
+        through all the hashtags present, and use the first hashtag that's in our array of HASHTAGS (i.e. the array
+         of hashtags we subscribed to). This does mean that if multiple "hashtags of interest" exist on the tweet,
+         the rest will be discarded. This is mostly because of how the UI handles the hashtag: Based on the company,
+         the UI will put a point on the map, where the colour of the point is based on the dominant colour of the
+         company's logo.
+        """
+        if (numberOfHashtags > 1):
+          iterator = iter(dataInJson["entities"]["hashtags"])
+          for tag in iterator:
+            if ('#'+tag["text"].lower()) in self.hashtags:
+              hashtag = tag["text"]
+              break
+        else:
+          hashtag = dataInJson["entities"]["hashtags"][0]["text"]
+
+        print("Tweet: {} \n by: {} \n from: {} \n coordinates: {} \n hashtag: {} \n"
+              .format(dataInJson["text"], dataInJson["user"]["screen_name"],
+                      dataInJson["place"]["full_name"], coordinates, hashtag))
+
+        dataToSend['coordinates'] = coordinates
+        dataToSend['hashtag'] = hashtag
     except Exception as ex:
       print("Caught exception while parsing the tweet.")
       print(ex)
       pass
 
     try:
-      if coordinates is not None:
-        self.webSocketSender.send(','.join(map(str, coordinates)))
+      if dataToSend: #empty dictionaries evaluate to false in Python.
+        self.webSocketSender.send(json.dumps(dataToSend))
     except Exception as ex:
       print("Caught exception while attempting to send the tweet over websocket.")
       print(ex)

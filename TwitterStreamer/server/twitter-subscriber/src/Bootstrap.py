@@ -1,6 +1,6 @@
-from src.TwitterSubscriber import TwitterSubscriber
-from src.TwitterListener import TwitterListener
-from src.WebSocketSender import WebSocketSender
+from TwitterSubscriber import TwitterSubscriber
+from TwitterListener import TwitterListener
+from WebSocketSender import WebSocketSender
 
 """As the name suggests, the bootstrapper."""
 
@@ -8,13 +8,19 @@ from src.WebSocketSender import WebSocketSender
 Note: Leading/trailing whitespaces will be stripped, so you could easily have: "Port = 8000" as well."""
 CONFIG_FILE="../config/config.cfg"
 
+"""The hashtags with which we are filtering/streaming the Twitterverse. Sticking to FANG + Apple for no
+There's a good case to move this to configuration/have this as an argument entered by the user.
+Note: Company names aren't camel-cased as it makes string comparisons more cumbersome. The Twitter streaming API is
+case-insensitive."""
+HASHTAGS=['#facebook', '#amazon', '#netflix', '#google', '#alphabet', '#apple']
+
 def main():
   """Initialises the WebSocketSender, which creates the WebSocket connection and streams data down."""
   sender = WebSocketSender()
 
   """Initialises the TwitterListener, which has a reference to the WebSocketSender, simply to be able to _send_
   messages down to the client(s)."""
-  listener = TwitterListener(sender)
+  listener = TwitterListener(sender, HASHTAGS)
 
   """Pulls out OAuth keys from the configuration file, which is needed to authenticate with Twitter.
   TODO: Should really look into making this more elegant. For example, if any of the keys or values had an "=",
@@ -33,7 +39,7 @@ def main():
 
   """Create the TwitterSubscriber object, which in turn initializes Tweepy, which in turn authorises the connection
   with Twitter."""
-  subscriber = TwitterSubscriber(listener, oauthKeys)
+  subscriber = TwitterSubscriber(listener, oauthKeys, HASHTAGS)
 
   """Subscribe to tweets. Perhaps it might be nice to allow users to input the "track" they're interested in, and
   stream the data accordingly?"""
