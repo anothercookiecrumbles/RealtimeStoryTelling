@@ -18,6 +18,8 @@ class TwitterListener:
   def __init__(self, webSocketSender, hashtags):
     self.webSocketSender = webSocketSender
     self.hashtags = hashtags
+    self.tweets = 0
+    self.tweetsWithGeolocation = 0
 
   def on_data(self, data):
     """
@@ -28,6 +30,7 @@ class TwitterListener:
       :param data: The entire Twitter message in the JSON format. From here, we can extract whichever values we
         want to send to the front-end.
     """
+    self.tweets = self.tweets+1
     dataToSend = {}
     try:
       dataInJson = json.loads(data)
@@ -47,14 +50,17 @@ class TwitterListener:
           for tag in iterator:
             if ('#'+tag["text"].lower()) in self.hashtags:
               hashtag = tag["text"]
+              print("Tweet: {} \n by: {} \n from: {} \n coordinates: {} \n hashtag: {} \n"
+                .format(dataInJson["text"], dataInJson["user"]["screen_name"],
+                        dataInJson["place"]["full_name"], coordinates, hashtag))
+
+              dataToSend['coordinates'] = coordinates
+              dataToSend['hashtag'] = hashtag
+              self.tweetsWithGeolocation = self.tweetsWithGeolocation + 1
               break
-
-        print("Tweet: {} \n by: {} \n from: {} \n coordinates: {} \n hashtag: {} \n"
-                  .format(dataInJson["text"], dataInJson["user"]["screen_name"],
-                          dataInJson["place"]["full_name"], coordinates, hashtag))
-
-        dataToSend['coordinates'] = coordinates
-        dataToSend['hashtag'] = hashtag
+      if (self.tweets % 10 == 0):
+        print("The total number of messages received is {} and the number of messages with geolocation is {}."
+            .format(self.tweets, self.tweetsWithGeolocation))
     except Exception as ex:
       print("Caught exception while parsing the tweet.")
       print(ex)
@@ -82,7 +88,7 @@ class TwitterListener:
 
   def on_connect(self):
     """Once we successfully connect to Twitter, this prints out "Connected" in all its glory."""
-    print("Connected.")
+    print("Connected to Twitter.")
 
   def on_timeout(self):
     """Invoked when the connection to Twitter times out."""

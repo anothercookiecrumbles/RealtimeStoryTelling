@@ -7,9 +7,11 @@ var ws = new WebSocket("ws://localhost:8080")
 */
 ws.onmessage = function(event) {
   data = JSON.parse(event.data)
-  console.log(data)
   var hashtag = data["hashtag"].toLowerCase() // easier for string comparisons 
   var coordinates = data["coordinates"]
+
+  console.log("The hashtag " + hashtag + " was used in a tweet from the coordinates " 
+    + coordinates.join(","));
 
   // The colour codes are based on the logo colours of each of the organisations. 
   // The hex codes have been picked using the eyedrop on each company's logo (in Pixelmator).

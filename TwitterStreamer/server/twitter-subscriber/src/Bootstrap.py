@@ -15,6 +15,7 @@ Note: Company names aren't camel-cased as it makes string comparisons more cumbe
 case-insensitive."""
 HASHTAGS=['#facebook', '#amazon', '#netflix', '#google', '#alphabet', '#apple']
 
+
 def main():
   """Pulls out OAuth keys from the configuration file, which is needed to authenticate with Twitter.
   TODO: Should really look into making this more elegant. For example, if any of the keys or values had an "=",

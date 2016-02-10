@@ -1,5 +1,6 @@
 import tweepy
 from tweepy import Stream
+import sys
 
 """The TwitterSubscriber sets up the connection to Twitter (including authentication, etc.) and subscribes to tweets."""
 
@@ -24,3 +25,5 @@ class TwitterSubscriber:
     stream = Stream(self.auth, self.twitterListener)
     stream.filter(track=[','.join(self.hashtags)],
                   languages=['en'])
+
+
