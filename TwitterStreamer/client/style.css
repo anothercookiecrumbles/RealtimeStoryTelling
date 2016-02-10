@@ -1,21 +1,36 @@
+/* Effectively the "map" area of the html body. */
 svg {
-  border: 1px solid #A6EEF0;
+  border: 1px solid #bbb; 
 }
 
+/* The style of the actual map constructed. */
 path {
-  fill: #B7EFFF;
+  fill: #B7EFFF; 
   stroke: #90c6e5;
   opacity: 0.5
-  stroke-width: 1px sol;
+  stroke-width: 1px sol; /* demarcation of countries */
 }
 
+/**
+  * As long as you have the latest version of Chrome and OS X El Capitan, this will ensure that 
+  * the header font is San Francisco. 
+  * Reference: http://furbo.org/2015/07/09/i-left-my-system-fonts-in-san-francisco/
+ */
 h1 {
-  font-family: -apple-system-headline, Helvetica, Arial, sans-serif;
+  font-family: system, -apple-system, BlinkMacSystemFont,
+      "Helvetica Neue", "Lucida Grande";
   color: #bbb; 
   text-align: center;
 }
 
+h2 {
+  font-family: system, -apple-system, BlinkMacSystemFont,
+      "Helvetica Neue", "Lucida Grande";
+  color: #ccc; 
+  text-align: center;
+}
+
+/* Center aligns the entire body, such that the map is now centered instead of left-aligned. */
 body {
-  vertical-align: center;
   text-align: center;
 }
