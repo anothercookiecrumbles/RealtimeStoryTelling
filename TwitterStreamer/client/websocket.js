@@ -40,7 +40,7 @@ ws.onmessage = function(event) {
     .style('stroke', '#ccc')
     .style('stroke-width', 1)
     .transition()
-    .duration(5000) 
+    .duration(15000) 
     // To keep the dots in place, you could, in theory, comment out/remove this line. 
     .style("opacity", 0); 
   }
