@@ -24,6 +24,12 @@ The client-side of this application was built using HTML, CSS and JavaScript. Ad
 
 ##Starting everything up (the instructions below are for python3):  
 
+As a first step, ensure you have the tweepy and websocket_server libraries installed.  
+
+Before the server can be started, the correct config file should be copied over to  
+`/path/to/server/config/config.cfg`  
+At the moment, the file there is a placeholder, which can either be editted with one's own keys. For the assignment, the config.cfg file has been submitted on Courseworks.  
+
 To start up the server, in a terminal emulator (e.g. Terminal on OS X), run:  
 
   `python3 /path/to/Bootstrap.py`
