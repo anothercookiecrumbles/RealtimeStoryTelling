@@ -35,6 +35,8 @@ ws.onmessage = function(event) {
       projection(coordinates)[1] + ")";}) 
     .style('fill', color) 
     .style('opacity', 1) 
+    .style('stroke', '#ccc')
+    .style('stroke-width', 1)
     .transition()
     .duration(5000) 
     // To keep the dots in place, you could, in theory, comment out/remove this line. 

@@ -23,15 +23,15 @@ class TwitterListener:
     """
     Invoked whenever a new message is streamed from Twitter.
     As the assignment intends to map the tweets, it pulls out the latitude-longitude from the tweet, provided the
-    location is available. If not, the tweet is silently dropped – mostly because, well, how do you map something
-    sans lat-long?
+    location is available. If not, the tweet is silently dropped -- mostly because, well, how do you map something
+    sans latitude and longitude?
       :param data: The entire Twitter message in the JSON format. From here, we can extract whichever values we
         want to send to the front-end.
     """
     dataToSend = {}
     try:
       dataInJson = json.loads(data)
-      if dataInJson["place"] is not None:
+      if "place" in dataInJson and dataInJson["place"] is not None:
         coordinates = dataInJson["place"]["bounding_box"]["coordinates"][0][0]
 
         numberOfHashtags = len(dataInJson["entities"]["hashtags"])
@@ -42,18 +42,16 @@ class TwitterListener:
          the UI will put a point on the map, where the colour of the point is based on the dominant colour of the
          company's logo.
         """
-        if (numberOfHashtags > 1):
+        if (numberOfHashtags > 0):
           iterator = iter(dataInJson["entities"]["hashtags"])
           for tag in iterator:
             if ('#'+tag["text"].lower()) in self.hashtags:
               hashtag = tag["text"]
               break
-        else:
-          hashtag = dataInJson["entities"]["hashtags"][0]["text"]
 
         print("Tweet: {} \n by: {} \n from: {} \n coordinates: {} \n hashtag: {} \n"
-              .format(dataInJson["text"], dataInJson["user"]["screen_name"],
-                      dataInJson["place"]["full_name"], coordinates, hashtag))
+                  .format(dataInJson["text"], dataInJson["user"]["screen_name"],
+                          dataInJson["place"]["full_name"], coordinates, hashtag))
 
         dataToSend['coordinates'] = coordinates
         dataToSend['hashtag'] = hashtag
@@ -63,7 +61,7 @@ class TwitterListener:
       pass
 
     try:
-      if dataToSend: #empty dictionaries evaluate to false in Python.
+      if dataToSend:#empty dictionaries evaluate to false in Python.
         self.webSocketSender.send(json.dumps(dataToSend))
     except Exception as ex:
       print("Caught exception while attempting to send the tweet over websocket.")
@@ -91,7 +89,7 @@ class TwitterListener:
     print("Connection to Twitter timed out.")
 
   def on_status(self, status):
-    """Invoked when there's a status change – not entirely sure when this will be invoked.
+    """Invoked when there's a status change -- not entirely sure when this will be invoked.
       :param status: The new status when a status changes. Is there a way to capture the old status?
     """
     print("Updating status to {}".format(status))

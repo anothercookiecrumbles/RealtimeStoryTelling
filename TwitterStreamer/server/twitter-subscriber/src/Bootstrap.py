@@ -22,7 +22,7 @@ def main():
   oauthKeys = {}
   try:
     #Handle relative and absolute paths with equal grace.
-    current = os.path.dirname(os.path.abspath(__file__)) + "/x"
+    current = os.path.dirname(os.path.abspath(__file__)) + "/"
     absoluteConfigFile = current + CONFIG_FILE
     with open(absoluteConfigFile) as config:
       for line in config:

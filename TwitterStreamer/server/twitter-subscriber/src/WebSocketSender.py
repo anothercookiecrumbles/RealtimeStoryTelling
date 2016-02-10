@@ -38,5 +38,5 @@ class WebSocketSender:
 
   def __init__(self):
     self.server = WebsocketServer(8080)
-    t = Thread(target=self.startWebSocketServer)
-    t.start()
+    self.t = Thread(target=self.startWebSocketServer)
+    self.t.start()
