@@ -42,4 +42,6 @@ Note: To get the Slack integration to work, you'll have to enter your access tok
 - Looking at the spreadsheet, it looks like the data is sorted chronologically and at first glance, it looks like the keys are also chronological. However, Burghart confirmed that this wasn't going to be the case, and the reason why it was this way was due to a technical/human bug earlier, which he'd had to fix manually. 
 - Unlike my first assignment, I've adopted the convention used in class, where multiple scripts are piped together instead of a it being a monolithic application. 
 - There's a lot more interesting things that we can do with this data, specially in terms of making interactive visualisations. It's something I'd like to explore in upcoming assignments if the opportunity arises. 
-- I acknowledge that perhaps Slack isn't the best medium for these notifications, but 
+- I acknowledge that perhaps Slack isn't the best medium for these notifications, but my rationale was twofold:
+  - I've never experimented with the Slack API before, and now seemed as good a time as any. The other option was using Twitter, but I'd used that in my first assignment. 
+  - As it's simply a notification on hitting a certain threshold, creating a webview which people have to go to seemed excessive. 
