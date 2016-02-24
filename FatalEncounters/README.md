@@ -22,10 +22,11 @@ This assignment starts by grabbing all the data from the spreadsheet and filteri
 
 Depending on the average calculated, two notifications are sent out: "Good news" if the average is less than 2 and "Bad news" if it's more than 7. These notifications are sent to a Slack channel. The thresholds were determined by looking at the current trends. 
 
-Like with all data-related projects, the numbers that exist here should be verified. To this end: 
+Like with all data-related projects, the numbers that exist here should be verified or late entries. To this end: 
 - I compared the numbers with The Guardian's The Counted project, and the numbers against this project are higher, but not enormously so. For example, Fatal Encounters reported 1,200 deaths in 2015 to The Guardian's 1158. 
 - It's still unknown whether the numbers from the early noughties are accurate or reflect that not enough information was available. As we aren't using these numbers for this specific project, it's not game over just yet.
 - Their website admits that they only have about 55% coverage but they're working towards full coverage. 
+- Some deaths might be added retrospectively, which means that they wouldn't be included in the 14-day moving average.
 
 ##Technical Specification 
 The project was built using Python 3. 
