@@ -1,4 +1,6 @@
 ##Introduction
+This is the second assignment for the Realtime Storytelling class.
+
 [Fatal Encounters](http://www.fatalencounters.org) was conceived by D. Brian Burghart after the 2012 killing of an unarmed college student in Alabama. The mission is to build the database containing all lives lost during police encounters starting at the turn of the millennium. This is similar to The Guardian's project, [The Counted](http://www.theguardian.com/us-news/2015/oct/06/suicide-by-cop-the-counted). Like The Guardian's project, it also crowdsources the data and cross-validates it before putting it on the master spreadsheet. There are three big differences though:
 
 - While The Guardian's The Counted dataset is available as multiple CSVs (one for each year), this is in a Google Spreadsheet, which makes it accessible through JSON. 
