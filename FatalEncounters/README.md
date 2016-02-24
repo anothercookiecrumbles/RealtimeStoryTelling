@@ -22,14 +22,16 @@ Depending on the average calculated, two notifications are sent out: "Good news"
 The project was built using Python 3. 
 It also needs Redis and the official SlackClient for Python.
 
-##Files 
+**Files**
+
 Four files are included in this project:
 - fatal_encounters_updates_only.py which loads the entire dataset from the Google Spreadsheet and then looks for updates. 
 - insert_into_redis.py which inserts the data into Redis (much as the name suggests). 
 - calculate_moving_average.py which calculates the moving average over periods of fourteen days. 
 - slack.py which pushes notifications out to Slack based on the whether the moving average calculated breaches the thresholds. 
 
-##Running the project
+**Running the project**
+
 The files can run in sets of two: 
 - To poll the database and update Redis:
 `python3 fatal_encounters_updates_only.py | python3 insert_into_redis.py`
