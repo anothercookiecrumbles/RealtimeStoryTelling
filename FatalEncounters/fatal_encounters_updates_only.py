@@ -1,8 +1,23 @@
+#Pulls the "Fatal Encounters" spreadsheet content in JSON format, iterates
+#through all entries.
+#Amongst other things, it'll be interesting to see:
+# - how these numbers have changed over time (if they have changed over time).
+# - which states have the highest number of fatalities.
+#However, additional statistics like the demographics of each state and the
+#crime breakdown would provide a more wholistic picture.
+#Also, this dataset has been crowdsourced and each entry verified. That means
+#that there is a possibility that there are fatalities that are absent from
+#the dataset as they couldn't be verified.
+#The Fatal Encounters spreadsheet: https://docs.google.com/spreadsheets/
+#d/1dKmaV_JiWcG8XBoRgP8b4e9Eopkpgt7FL7nyspvzAsE/edit?pref=2&pli=1#gid=0
+#The spreadsheet ID: 1dKmaV_JiWcG8XBoRgP8b4e9Eopkpgt7FL7nyspvzAsE
+
 import urllib.request
 import json
 import time
 import re
 import sys
+from datetime import datetime
 
 #Setup some stateful variables.
 
@@ -32,6 +47,8 @@ size_of_data = 0
 #between Column A and Column W. So, since we both research past incidents and current
 #ones, the IDs will grow increasingly disordered beginning with the next update."
 processed_entries = [];
+
+counts = {}
 
 #We want to continuously poll this spreadsheet to see if there are any changes.
 #In between each request, we can sleep for a couple of minutes, as this isn't a
@@ -138,6 +155,11 @@ while(True):
           details["state"] = state
           details["date"] = date
 
+          if race in counts.keys():
+            counts[race] = counts[race] + 1
+          else:
+            counts[race] = 1
+
           #Normally, with this kind-of batch processing, one would steer clear of 15K
           #flushes, but instead batch the dumps in a sensible manner -- say by year?
           #However, for the purpose of this assignment, this script attempts to emulate
@@ -145,5 +167,6 @@ while(True):
           #waiting endlessly.
           print(json.dumps(details))
           sys.stdout.flush()
+  #print(counts)
   time.sleep(120)
 
