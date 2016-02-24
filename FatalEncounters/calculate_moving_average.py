@@ -16,8 +16,8 @@ redis = redis.Redis()
 #don't tell the whole story, it's still interesting to observe.
 #So, the threshold has been decided based on the current trends, and an
 #alert will flag if the average is less than two a day or more than six.
-min_threshold = 1
-max_threshold = 1
+min_threshold = 2
+max_threshold = 6
 
 #The time frame for our moving average, i.e. across how many days do we
 #calculate the moving average. The idea is, with each new day, we'll drop
@@ -37,6 +37,9 @@ while(True):
   #We calculate the average
   average = number_of_fatalities/14
 
+  #Checks the average against the minimum and maximum thresholds defined above. 
+  #If either is breached, a message gets pushed out -- on piped out -- to
+  #slack.py.
   if average < min_threshold:
     print("Good news! On average, there've been less than two fatal encounters"
         + " a day!")
