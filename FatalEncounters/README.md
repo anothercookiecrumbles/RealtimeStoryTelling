@@ -67,4 +67,3 @@ Note: To get the Slack integration to work, you'll have to enter your access tok
 - http://www.fatalencounters.org
 - https://api.slack.com/
 - https://github.com/slackhq/python-slackclient
-- D. Brian Burghart
