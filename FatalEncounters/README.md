@@ -56,3 +56,14 @@ Note: To get the Slack integration to work, you'll have to enter your access tok
 - I acknowledge that perhaps Slack isn't the best medium for these notifications, but my rationale was twofold:
   - I've never experimented with the Slack API before, and now seemed as good a time as any. The other option was using Twitter, but I'd used that in my first assignment. 
   - As it's simply a notification on hitting a certain threshold, creating a webview which people have to go to seemed excessive. 
+
+##References/External Sources:
+- https://github.com/mikedewar/RealTimeStorytelling/tree/master/
+- https://docs.python.org/3.5/reference/
+- http://www.tutorialspoint.com/python/python_reg_expressions.htm
+- https://pymotw.com/2/datetime/
+- http://redis.io/commands/
+- http://www.theguardian.com/us-news/2015/oct/06/suicide-by-cop-the-counted
+- http://www.fatalencounters.org
+- https://api.slack.com/
+- https://github.com/slackhq/python-slackclient
