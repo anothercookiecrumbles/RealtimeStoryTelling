@@ -8,6 +8,11 @@ import sys
 #it should be pulled from configuration, which isn't easily accessible. .
 token = "ENTER TOKEN HERE"
 
+#Enter the name of the channel you want the message to be posted in. It must 
+#be authenticated using the access token entered. No hashtag is needed before
+#the channel name.
+channel = "ENTER CHANNEL HERE"
+
 #Initialise the slackClient. This opens a connection to Slack, and validates
 #the access token that's passed in. If the access token has been revoked or is
 #invalid, the slackClient will not connect, and therefore, we will not be able
@@ -30,7 +35,7 @@ if slackClient.rtm_connect():
     #sleep for a minute (60 seconds) between iterations.
     while True:
         message = sys.stdin.readline()
-        slackClient.rtm_send_message('pri_slack_dev', message)
+        slackClient.rtm_send_message(channel, message)
         time.sleep(60)
 else:
     print("Connection Failed, invalid token?")
