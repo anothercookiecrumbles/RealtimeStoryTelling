@@ -85,6 +85,7 @@ def build_histogram():
 #of the data in the db2 database. All it does is invoke the build_
 #histogram() function, and returns the output.
 @app.route("/")
+@app.route("/probability")
 def histogram():
   return render_template('index.html')
 
@@ -121,7 +122,6 @@ def entropy():
 #Returns the probability of each of the wiki entries based on the total number
 #of wiki edits. This is invoked when a client calls http://<server_name>:5000/
 #probability
-@app.route("/probability")
 def probability():
   histogram=build_histogram()
   #The total number of edits, as the sum of all edits against each wiki will
@@ -131,6 +131,17 @@ def probability():
   #probability for that specific key.
   data = {k: v/total for k,v in histogram.items()}
   return json.dumps(data)
+
+def probability_table():
+  prob_map = json.loads(probability())
+  keys = prob_map.keys()
+  items = []
+  #...and then we iterate through the keys to find the probability of each site
+  for key in keys:
+    prob = prob_map[key]
+    #Creates the list in the format we need the front-end to receive this data.
+    items.append({"site":key, "probability": prob_map[key]})
+  return json.dumps(items)
 
 #Invoked when a client calls http://<server_name>:5000/rate. This returns the
 #rate of the distribution, i.e. the average difference between edit entries
