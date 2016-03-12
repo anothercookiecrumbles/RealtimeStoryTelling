@@ -56,3 +56,13 @@ Seven files exist in this project:
 
 Note: To get the Slack integration to work, you'll have to enter your access token and channel – I could've added mine/driven it out of configuration, but then that would involve adding you to a(n) (ephemeral) channel. I wasn't sure if that was the right thing to do. 
 
+##References/External Sources:
+- https://github.com/mikedewar/RealTimeStorytelling/tree/master/
+- https://docs.python.org/3.5/reference/
+- http://redis.io/commands/
+- https://www.mediawiki.org/wiki/API:Recent_changes_stream
+- http://codepen.io/Krinkle/pen/laucI/?editors=101
+- https://pypi.python.org/pypi/socketIO-client
+- https://phabricator.wikimedia.org/T125059
+- https://phabricator.wikimedia.org/T91393
+
