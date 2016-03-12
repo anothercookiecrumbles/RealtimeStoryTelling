@@ -75,3 +75,4 @@ For a lot of the Wiki sites, doing this project at an individual level would be 
 - https://phabricator.wikimedia.org/T125059
 - https://phabricator.wikimedia.org/T91393
 - http://bl.ocks.org/Jverma/887877fc5c2c2d99be10
+- http://stackoverflow.com/questions/19127035/what-is-the-difference-between-svgs-x-and-dx-attribute
