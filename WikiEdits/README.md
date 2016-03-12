@@ -50,11 +50,21 @@ Seven files exist in this project:
 
 `python api.py`
 
+You can then run:
+- http://localhost:5000 to get the distribution details.
+- http://localhost:5000/entropy to get the entropy.
+- http://localhost:5000/probability to get the probabilities across all the wikipedia sites 
+- http://localhost:5000/rate to get the average of the deltas across messages 
+
 * And to get alerts:
 
 `python alert.py | python slack.py`
 
 Note: To get the Slack integration to work, you'll have to enter your access token and channel – I could've added mine/driven it out of configuration, but then that would involve adding you to a(n) (ephemeral) channel. I wasn't sure if that was the right thing to do. 
+
+##Additional Notes/Afterthoughts
+* For a lot of the Wiki sites, doing this project at an individual level would be significantly more interesting over a period of time. However, for the purpose of this assignment, I wanted a stream with a lot of data, which can't be guaranteed for the sites that are less frequently updated. Hence, the decision to use all sites in the Wikipedia realm. One could argue that you could narrow it down to a select twenty, but there's no telling at what point one of the sites will be doing something "interesting" and what that something "interesting" could be. 
+* The 
 
 ##References/External Sources:
 - https://github.com/mikedewar/RealTimeStorytelling/tree/master/
