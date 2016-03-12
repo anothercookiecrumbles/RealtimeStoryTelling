@@ -1,0 +1,110 @@
+<!--This file has been created with the help of
+http://bl.ocks.org/Jverma/887877fc5c2c2d99be10 -->
+<!DOCTYPE html>
+<meta charset="utf-8">
+
+<head>
+  <!-- Styles for the d3 barchart, including the colour of the barchart, and the
+  styling of the fonts. -->
+  <style>
+  .bar{
+    fill: darkgrey;
+  }
+  .axis {
+    font-size: 60%;
+    font-family: system, -apple-system, BlinkMacSystemFont,
+          "Helvetica Neue", "Lucida Grande";
+  }
+  .axis path,
+  .axis line {
+    fill: none;
+    stroke: #000;
+    shape-rendering: crispEdges;
+  }
+  </style>
+</head>
+<body>
+
+<!-- Sources the d3 script, which we will have to reference to create the
+chart.-->
+<script src="http://d3js.org/d3.v3.min.js"></script>
+
+<script>
+// Sets up the canvas, in terms of margins, dimensions and position of where the barchart
+// should appear.
+var margin = {top: 100, right: 100, bottom: 100, left: 100},
+  width = 1000 - margin.left - margin.right,
+  height = 500 - margin.top - margin.bottom;
+
+//Sets the scales of both axes. More details can be found here:
+//https://github.com/mbostock/d3/wiki/Quantitative-Scales
+var x = d3.scale.ordinal().rangeRoundBands([0, width], .25);
+var y = d3.scale.linear().range([height, 0]);
+
+// Defines the X and Y axes, in terms of how they're oriented
+var xAxis = d3.svg.axis()
+  .scale(x)
+  .orient("bottom")
+var yAxis = d3.svg.axis()
+  .scale(y)
+  .orient("left")
+
+// Adds the D3 SVG element to the HTML body, using the margins/dimensions
+//defined above.
+var svg = d3.select("body").append("svg")
+  .attr("width", width + margin.left + margin.right)
+  .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+  .attr("transform",
+      "translate(" + margin.left + "," + margin.top + ")");
+
+//Gets the site-frequency mapping from the server by invoking
+//http://localhost:5000/histogram. This returns a JSON list, where each entry
+//is a dict. e.g.:t[{"site":<site>, "frequency":<frequency>}]
+d3.json("histogram", function(error, data) {
+  data.forEach(function(d) {
+    d.site = d.site;
+    d.frequency = +d.frequency;
+  });
+
+//Now that we have the data, we can define the domain.
+x.domain(data.map(function(d) { return d.site; }));
+y.domain([0, d3.max(data, function(d) { return d.frequency; })]);
+
+//Adds the X and Y Axes to the SVG.
+svg.append("g")
+  .attr("class", "x axis")
+  .attr("transform", "translate(0," + height + ")")
+  .call(xAxis)
+  .selectAll("text")
+  .style("text-anchor", "end") // we end up losing text if it's start/middle
+  .attr("dx", "-.8em") // defines the relative coordinate based on x.
+  .attr("dy", "-.55em") // defines the relative coordinates based on y.
+  .attr("transform", "rotate(-90)" );
+
+svg.append("g")
+  .attr("class", "y axis")
+  .call(yAxis)
+  .append("text")
+  .attr("transform", "rotate(-90)")
+  .attr("y", 5)
+  .attr("dy", ".71em")
+  .style("text-anchor", "end")
+  .text("frequency");
+
+// Adds the actual bar chart to the SVG/HTML. This renders the chart,
+//adding the columns based on the frequency.
+svg.selectAll("bar")
+  .data(data)
+  .enter().append("rect")
+  .attr("class", "bar")
+  .attr("x", function(d) { return x(d.site); })
+  .attr("width", x.rangeBand())
+  .attr("y", function(d) { return y(d.frequency); })
+  .attr("height", function(d) { return height - y(d.frequency); });
+
+});
+
+</script>
+
+</body>

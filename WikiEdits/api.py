@@ -26,7 +26,7 @@
 #far behind with 14-17% of all edits.
 
 import flask
-from flask import request
+from flask import request, render_template
 
 import redis
 
@@ -85,9 +85,27 @@ def build_histogram():
 #of the data in the db2 database. All it does is invoke the build_
 #histogram() function, and returns the output.
 @app.route("/")
-@app.route("/histogram")
 def histogram():
-  return json.dumps(build_histogram())
+  return render_template('index.html')
+
+#Returns a JSON list of site-frequency dictionaries, which is used to render
+#the barchart at the front-end.
+@app.route("/histogram")
+def get_histogram():
+  #First, we get all the data.
+  data = build_histogram()
+  items = []
+  keys = data.keys()
+  #...and then we iterate through the keys to find data with a higher frequency
+  #than 0.001. The number was chosen arbitrarily. However, if we skipped this or
+  #didn't do this, the chart looked cluttered and visually unappealing.
+  for key in keys:
+    frequency = data[key]
+    if (frequency < 0.001):
+      continue
+    #Creates the list in the format we need the front-end to receive this data.
+    items.append({"site":key, "frequency": data[key]})
+  return json.dumps(items)
 
 #When a client calls http://<server_name>:5000/entropy, this returns the
 #current entropy across the entire dataset in db2.

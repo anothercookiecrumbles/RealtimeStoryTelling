@@ -14,6 +14,8 @@ db1 = redis.Redis(db=0)
 while True:
   #Reads in the line that's piped into this script.
   item = sys.stdin.readline()
+  if item == None:
+    continue
   try:
     #Loads the data piped in to a dictionary for easy/clean
     #processing.

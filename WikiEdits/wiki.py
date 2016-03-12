@@ -22,8 +22,7 @@ class Wiki(BaseNamespace):
   #change.
   def on_change(self, change):
     try:
-      changed = json.loads(change)
-      if ("server_name" in changed) and ("timestamp" in changed):
+      if ("server_name" in change) and ("timestamp" in change):
         print('{"wiki": "%(server_name)s", "timestamp": "%(timestamp)s"}' % change)
         sys.stdout.flush()
     except Exception as ex:
