@@ -135,19 +135,31 @@ def probability():
   data = {k: v/total for k,v in histogram.items()}
   return json.dumps(data)
 
+#Retrieves the probability of a single site, depending on the parameter passed
+#into the method. For example,
+#http://localhost:5000/probability/commons.wikimedia.org will return the
+#probability for commons.wikimedia.org. In line 142 (@app.route('/probability/
+#<site>')), the <site> indicates the parameter that's passed in with the http
+#request.
 @app.route('/probability/<site>')
 def probability_site(site):
+  #gets rids of all the whitespace, if any, in the method argument, i.e. site.
   site = site.strip()
-  print('Getting probability for ' + site)
+  #Retrieves a list of all probabilities in JSON format.
   probabilities = probability()
+  #Converts the JSON representation to a map. To be honest, this code should
+  #be refactored slightly such that we can forgo this step.
   probability_map = json.loads(probabilities)
+  #Checks if the site exists in the map...
   if site in probability_map:
+    #...and if it does, get the corresponding probability.
     prob = probability_map.get(site)
     return "Probability is {0}".format(str(prob))
   else:
+    #...and if it doesn't, let the calling code know as much.
     return "Site {0} doesn't exist in the distribution.".format(site)
 
-
+#This isn't used right now, so please ignore it.
 def probability_table():
   prob_map = json.loads(probability())
   keys = prob_map.keys()
