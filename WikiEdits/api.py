@@ -17,6 +17,9 @@
 #wiki against the whole universe of wikis. Again, this is based on the
 #instructions received in class and can be accessed over:
 #http://<server_name>:5000/probability
+#iv) probability_site(): Retrieves probability for a single site. So, for
+#example, you can call probability_site('en.wikipedia.org') and it'll return
+#the probability that the site is en.wikipedia.org.
 #
 #The corresponding API script from class that was referred to can be found here:
 #https://github.com/mikedewar/RealTimeStorytelling/blob/master/3/city-bot-api.py
@@ -131,6 +134,19 @@ def probability():
   #probability for that specific key.
   data = {k: v/total for k,v in histogram.items()}
   return json.dumps(data)
+
+@app.route('/probability/<site>')
+def probability_site(site):
+  site = site.strip()
+  print('Getting probability for ' + site)
+  probabilities = probability()
+  probability_map = json.loads(probabilities)
+  if site in probability_map:
+    prob = probability_map.get(site)
+    return "Probability is {0}".format(str(prob))
+  else:
+    return "Site {0} doesn't exist in the distribution.".format(site)
+
 
 def probability_table():
   prob_map = json.loads(probability())
