@@ -54,6 +54,7 @@ You can then run:
 - http://localhost:5000 to get the distribution details.
 - http://localhost:5000/entropy to get the entropy.
 - http://localhost:5000/probability to get the probabilities across all the wikipedia sites 
+- http://localhost:5000/probability/<site> to get the probability of a single site (e.g. http://localhost:5000/probability/commons.wikimedia.org)
 - http://localhost:5000/rate to get the average of the deltas across messages 
 
 * And to get alerts:
